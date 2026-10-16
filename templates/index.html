@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhishGuard AI | Website Detection</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#17213c;background:#f4f7ff}
+*{box-sizing:border-box}body{margin:0}header{padding:22px 7%;background:white;border-bottom:1px solid #e5eaf5;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:800;font-size:21px;color:#1c2b50}.brand span{color:#3568f5}nav a{margin-left:22px;color:#53617c;text-decoration:none;font-size:14px}
+main{max-width:1080px;margin:55px auto;padding:0 22px}.pill{display:inline-block;padding:8px 13px;border-radius:30px;background:#e8efff;color:#2855d9;font-weight:700;font-size:12px}
+h1{font-size:clamp(36px,5vw,55px);letter-spacing:-1.8px;line-height:1.1;margin:20px 0 14px}.blue{color:#3568f5}.intro{color:#65718a;line-height:1.8;max-width:650px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:30px 0}.feature,.panel{background:white;border:1px solid #e6ebf5;border-radius:18px;padding:23px;box-shadow:0 8px 25px #1c2b5009}.feature b{display:block;margin-bottom:7px}.feature p{font-size:13px;color:#6b7890;margin:0;line-height:1.6}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}.panel h2{margin:0 0 10px;font-size:21px}.muted{color:#68758d;font-size:14px;line-height:1.7}
+.drop{margin-top:22px;padding:28px 18px;text-align:center;border:2px dashed #c9d5ee;background:#fafbff;border-radius:14px}.symbol{font-size:35px;color:#3568f5}.drop p{color:#68758d;font-size:13px}
+input{width:100%;margin:15px 0;font-size:13px}button{width:100%;padding:14px;border:0;border-radius:10px;background:linear-gradient(100deg,#3568f5,#694de8);color:white;font-size:15px;font-weight:700;cursor:pointer}button:disabled{opacity:.6}
+.note{margin-top:17px;padding:13px;background:#eef4ff;color:#3555a0;border-radius:10px;font-size:12px;line-height:1.7}.step{display:flex;gap:13px;margin:23px 0}.number{background:#edf1fb;border-radius:9px;padding:9px 11px;height:max-content;font-weight:800}.step p{margin:5px 0;color:#68758d;font-size:13px;line-height:1.6}
+footer{text-align:center;padding:30px;color:#8490a6;font-size:12px}
+@media(max-width:720px){header{padding:18px 5%}nav a{margin-left:10px}nav a:first-child{display:none}main{margin:35px auto}.features,.layout{grid-template-columns:1fr}.features{gap:10px}h1{letter-spacing:-1px}}
+</style>
+</head>
+<body>
+<header><div class="brand">◈ PhishGuard <span>AI</span></div><nav><a href="/">Home</a><a href="#analyze">Analyze</a><a href="#how">How it works</a><a href="/docs" target="_blank">API Docs ↗</a></nav></header>
+<main>
+<div class="pill">✦ MACHINE-LEARNING POWERED DETECTION</div>
+<h1>Understand website risk.<br><span class="blue">One dataset at a time.</span></h1>
+<p class="intro">Upload website feature data and run predictions using your trained machine-learning model. Review the results in a clear report.</p>
+<section class="features">
+<div class="feature"><b>⚡ Fast inference</b><p>Send your CSV to the deployed prediction API.</p></div>
+<div class="feature"><b>◇ Trained ML model</b><p>Uses your saved preprocessor and model.</p></div>
+<div class="feature"><b>▤ Readable results</b><p>View predictions alongside the input data.</p></div>
+</section>
+<section class="layout">
+<div class="panel" id="analyze"><h2>Analyze your CSV</h2><p class="muted">Choose a CSV containing the feature columns expected by your trained model.</p>
+<form id="upload" action="/predict" method="post" enctype="multipart/form-data">
+<div class="drop"><div class="symbol">⇧</div><b id="filename">Choose your dataset</b><p>CSV files only · Select a file from your device</p><input type="file" name="file" id="file" accept=".csv,text/csv" required><button id="submit" type="submit">Run prediction →</button></div>
+</form>
+<div class="note"><b>Input requirements</b><br>Use the same feature schema as the training data. A CSV containing only raw URLs may not work if the model expects engineered features.</div>
+</div>
+<div class="panel" id="how"><h2>How it works</h2><p class="muted">From input to model-generated results.</p>
+<div class="step"><span class="number">01</span><div><b>Upload feature data</b><p>Select a CSV with the expected columns.</p></div></div>
+<div class="step"><span class="number">02</span><div><b>Process and predict</b><p>The backend applies the saved preprocessing pipeline and model.</p></div></div>
+<div class="step"><span class="number">03</span><div><b>Review your output</b><p>The results page displays each row with its predicted class.</p></div></div>
+<div class="note">Predictions are not guarantees of website safety. This application analyzes supplied data; it does not directly scan live websites.</div>
+</div>
+</section>
+</main>
+<footer>PhishGuard AI · Phishing Website Detection · FastAPI · Machine Learning</footer>
+<script>
+const file=document.getElementById('file'),name=document.getElementById('filename'),form=document.getElementById('upload'),btn=document.getElementById('submit');
+file.addEventListener('change',()=>{if(file.files.length)name.textContent=file.files[0].name});
+form.addEventListener('submit',e=>{if(!file.files.length||!file.files[0].name.toLowerCase().endsWith('.csv')){e.preventDefault();alert('Please select a valid CSV file.');return}btn.disabled=true;btn.textContent='Processing…'});
+</script>
+</body></html>
