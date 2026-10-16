@@ -3,9 +3,15 @@ pandas
 numpy
 pymongo
 certifi
-pymongo
+pymongo[srv]
 scikit-learn
-dotenv
-scipy
-dill
-# -e .
+mlflow
+pyaml
+dagshub
+fastapi
+uvicorn
+python-multipart
+
+
+##-e .
+jinja2
