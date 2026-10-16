@@ -1,0 +1,31 @@
+@'
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Logs and generated artifacts
+logs/
+Artifacts/
+mlruns/
+mlflow.db
+prediction_output/
+prediction_input.csv
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Keep trained models required by the API
+!final_model/
+'@ | Set-Content .gitignore
