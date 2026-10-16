@@ -1,21 +1,33 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Data Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
-</head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prediction Report | PhishGuard AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fc;color:#18233b;font-family:Inter,Segoe UI,Arial,sans-serif}
+header{background:white;border-bottom:1px solid #e5eaf2;padding:20px 5%;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:20px;font-weight:800;color:#18233b;text-decoration:none}.brand span{color:#3768f5}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:11px 15px;border-radius:10px;background:#edf2ff;color:#2855cf;text-decoration:none;font-weight:700;font-size:13px}.primary{background:#3768f5;color:white}
+main{max-width:1200px;margin:38px auto;padding:0 20px}.eyebrow{font-size:12px;color:#3564dc;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+h1{font-size:clamp(30px,4vw,42px);letter-spacing:-1px;margin:10px 0}.sub{color:#68758c;line-height:1.7;margin-bottom:25px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:25px 0}.card,.results{background:white;border:1px solid #e5eaf2;border-radius:16px;box-shadow:0 6px 24px #17213b08}
+.card{padding:22px}.label{color:#6c7890;font-size:13px;font-weight:600}.number{font-size:32px;font-weight:800;margin-top:9px}.hint{font-size:12px;color:#8a95a8;margin-top:5px}
+.results{overflow:hidden}.resulthead{padding:22px;display:flex;justify-content:space-between;gap:15px;align-items:center;border-bottom:1px solid #e8edf5;flex-wrap:wrap}.resulthead h2{font-size:19px;margin:0 0 5px}.resulthead p{margin:0;color:#748098;font-size:13px}
+.tablewrap{overflow:auto;max-height:65vh}table{border-collapse:separate;border-spacing:0;width:100%;white-space:nowrap;font-size:12px}thead th{position:sticky;top:0;background:#f0f4fc;color:#34425e;text-align:left;padding:13px 14px;border-bottom:1px solid #dfe6f1}tbody td{padding:12px 14px;border-bottom:1px solid #edf0f6;color:#47546d}tbody tr:nth-child(even){background:#fafbfe}tbody tr:hover{background:#f0f5ff}tbody td:last-child{font-weight:800;color:#2859d9}
+.bottom{color:#8a95a8;font-size:12px;margin:17px 2px;line-height:1.6}
+@media(max-width:650px){header{padding:16px;align-items:flex-start;gap:14px;flex-direction:column}main{margin-top:27px;padding:0 13px}.cards{grid-template-columns:1fr;gap:10px}.card{padding:17px}.number{font-size:27px}.resulthead{padding:17px}}
+</style></head>
 <body>
-    <h2>Predicted Data</h2>
-    {{ table | safe }}
-</body>
-</html>
+<header><a class="brand" href="/">◈ PhishGuard <span>AI</span></a><div class="actions"><a class="btn" href="/">← New analysis</a><a class="btn primary" href="/download-results">↓ Download CSV</a></div></header>
+<main>
+<div class="eyebrow">Machine learning · Analysis report</div><h1>Prediction results</h1>
+<p class="sub">Your dataset has been processed by the trained model. Review predicted classes below or download the complete report.</p>
+<section class="cards">
+<div class="card"><div class="label">Total records processed</div><div class="number">{{ total_rows }}</div><div class="hint">Rows in this prediction run</div></div>
+<div class="card"><div class="label">Predicted class 0</div><div class="number">{{ class_0_count }}</div><div class="hint">Model output value: 0</div></div>
+<div class="card"><div class="label">Predicted class 1</div><div class="number">{{ class_1_count }}</div><div class="hint">Model output value: 1</div></div>
+</section>
+<section class="results"><div class="resulthead"><div><h2>Dataset output</h2><p>Scroll horizontally to inspect all feature columns.</p></div><a class="btn primary" href="/download-results">Download results ↓</a></div>
+<div class="tablewrap">{{ table | safe }}</div></section>
+<p class="bottom">Class numbers are displayed as returned by your model. Verify the training label mapping before interpreting them as phishing or legitimate. Predictions do not guarantee website safety.</p>
+</main></body></html>

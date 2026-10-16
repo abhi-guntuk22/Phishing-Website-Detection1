@@ -15,7 +15,7 @@ from networksecurity.pipeline.training_pipeline import TrainingPipeline
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, File, UploadFile,Request
 from uvicorn import run as app_run
-from fastapi.responses import Response
+from fastapi.responses import Response, FileResponse
 from starlette.responses import RedirectResponse
 import pandas as pd
 
@@ -78,14 +78,19 @@ async def predict_route(request: Request,file: UploadFile = File(...)):
         #df['predicted_column'].replace(-1, 0)
         #return df.to_json()
         os.makedirs("prediction_output", exist_ok=True)
-        df.to_csv('prediction_output/output.csv')
-        table_html = df.to_html(classes='table table-striped')
-        #print(table_html)
+        df.to_csv("prediction_output/output.csv", index=False)
+        table_html = df.to_html(classes="table", index=False, border=0)
+        class_counts = df["predicted_column"].value_counts().to_dict()
         return templates.TemplateResponse(
-       request=request,
-      name="table.html",
-      context={"table": table_html},
-     )
+            request=request,
+            name="table.html",
+            context={
+                "table": table_html,
+                "total_rows": len(df),
+                "class_0_count": int(class_counts.get(0, class_counts.get(0.0, 0))),
+                "class_1_count": int(class_counts.get(1, class_counts.get(1.0, 0))),
+            },
+        )
 
     except Exception as e:
             raise NetworkSecurityException(e,sys)
